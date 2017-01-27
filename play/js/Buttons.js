@@ -5,6 +5,15 @@ only one of which can be activated at a time.
 
 *********************/
 
+var ballot2br = function(winner) {
+	blt = {"FPTP": "SPV", "IRV": "STI", "Borda": "Borda", "Condorcet": "Condorcet", "Approval": "Aprovação", "Score": "Nota"};
+	output = blt[winner];
+	if(typeof output != 'undefined')
+		return blt[winner];
+	else
+		return winner;
+}
+
 function ButtonGroup(config){
 
 	var self = this;
@@ -82,7 +91,7 @@ function Button(buttonConfig, onChoose){
 	self.dom.style.marginRight = buttonConfig.margin+"px";
 
 	// Click!
-	self.dom.innerHTML = buttonConfig.name;
+	self.dom.innerHTML = ballot2br(buttonConfig.name);
 	self.onClick = function(){
 		onChoose(self, buttonConfig);
 	};

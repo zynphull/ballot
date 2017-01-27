@@ -24,7 +24,7 @@ Election.score = function(model, options){
 	// NO WINNER?! OR TIE?!?!
 	if(!winner){
 
-		var text = "<b>NOBODY WINS</b>";
+		var text = "<b>NINGUÉM VENCE</b>";
 		model.caption.innerHTML = text;
 
 	}else{
@@ -32,16 +32,16 @@ Election.score = function(model, options){
 		// Caption
 		var text = "";
 		text += "<span class='small'>";
-		text += "<b>highest average score wins</b><br>";
+		text += "<b>maior nota média vence</b><br>";
 		for(var i=0; i<model.candidates.length; i++){
 			var c = model.candidates[i].id;
-			text += _icon(c)+"'s score: "+(tally[c].toFixed(2))+" out of 5.00<br>";
+			text += "nota de " + _icon(c)+ ": "+(tally[c].toFixed(2))+" de 5.00<br>";
 		}
 		text += "<br>";
-		text += _icon(winner)+" has the highest score, so...<br>";
+		text += _icon(winner)+" tem a maior nota, então...<br>";
 		text += "</span>";
 		text += "<br>";
-		text += "<b style='color:"+color+"'>"+winner.toUpperCase()+"</b> WINS";
+		text += "<b style='color:"+color+"'>"+us2br(winner).toUpperCase()+"</b> VENCE";
 		model.caption.innerHTML = text;
 
 	}
@@ -61,7 +61,7 @@ Election.approval = function(model, options){
 	// NO WINNER?! OR TIE?!?!
 	if(!winner){
 
-		var text = "<b>NOBODY WINS</b>";
+		var text = "<b>NINGUÉM VENCE</b>";
 		model.caption.innerHTML = text;
 
 	}else{
@@ -69,16 +69,16 @@ Election.approval = function(model, options){
 		// Caption
 		var text = "";
 		text += "<span class='small'>";
-		text += "<b>most approvals wins</b><br>";
+		text += "<b>quem tiver mais aprovações, vence</b><br>";
 		for(var i=0; i<model.candidates.length; i++){
 			var c = model.candidates[i].id;
-			text += _icon(c)+" got "+tally[c]+" approvals<br>";
+			text += _icon(c)+" teve "+tally[c]+" aprovações<br>";
 		}
 		text += "<br>";
-		text += _icon(winner)+" is most approved, so...<br>";
+		text += _icon(winner)+" foi o mais aprovado, então...<br>";
 		text += "</span>";
 		text += "<br>";
-		text += "<b style='color:"+color+"'>"+winner.toUpperCase()+"</b> WINS";
+		text += "<b style='color:"+color+"'>"+us2br(winner).toUpperCase()+"</b> VENCE";
 		model.caption.innerHTML = text;
 
 	}
@@ -89,7 +89,7 @@ Election.condorcet = function(model, options){
 
 	var text = "";
 	text += "<span class='small'>";
-	text += "<b>who wins each one-on-one?</b><br>";
+	text += "<b>quem vence em cada um-contra-um?</b><br>";
 
 	var ballots = model.getBallots();
 
@@ -128,7 +128,7 @@ Election.condorcet = function(model, options){
 				by = bWins;
 				to = aWins;
 			}
-			text += _icon(a.id)+" vs "+_icon(b.id)+": "+_icon(winner.id)+" wins by "+by+" to "+to+"<br>";
+			text += _icon(a.id)+" vs "+_icon(b.id)+": "+_icon(winner.id)+" vence por "+by+" a "+to+"<br>";
 
 		}
 	}
@@ -145,17 +145,17 @@ Election.condorcet = function(model, options){
 	text += "<br>";
 	if(topWinner){
 		var color = _colorWinner(model, topWinner);
-		text += _icon(topWinner)+" beats all other candidates in one-on-one races.<br>";
+		text += _icon(topWinner)+" vence todos os candidatos nas disputas um-contra-um.<br>";
 		text += "</span>";
 		text += "<br>";
-		text += "<b style='color:"+color+"'>"+topWinner.toUpperCase()+"</b> WINS";
+		text += "<b style='color:"+color+"'>"+us2br(topWinner).toUpperCase()+"</b> VENCE";
 	}else{
 		model.canvas.style.borderColor = "#000"; // BLACK.
-		text += "NOBODY beats everyone else in one-on-one races.<br>";
+		text += "NINGUÉM vence todos em disputas um-contra-um.<br>";
 		text += "</span>";
 		text += "<br>";
-		text += "THERE'S NO WINNER.<br>";
-		text += "<b id='ohno'>OH NO.</b>";
+		text += "NINGUÉM VENCEU!<br>";
+		text += "<b id='ohno'>AH NÃO.</b>";
 	}
 
 	// what's the loop?
@@ -179,7 +179,7 @@ Election.borda = function(model, options){
 	// NO WINNER?! OR TIE?!?!
 	if(!winner){
 
-		var text = "<b>NOBODY WINS</b>";
+		var text = "<b>NINGUÉM VENCE</b>";
 		model.caption.innerHTML = text;
 
 	}else{
@@ -187,16 +187,16 @@ Election.borda = function(model, options){
 		// Caption
 		var text = "";
 		text += "<span class='small'>";
-		text += "<b>lower score is better</b><br>";
+		text += "<b>quanto menor a pontuação, melhor</b><br>";
 		for(var i=0; i<model.candidates.length; i++){
 			var c = model.candidates[i].id;
-			text += _icon(c)+"'s total score: "+tally[c]+"<br>";
+			text += "pontuação total de " +_icon(c)+" é: "+tally[c]+"<br>";
 		}
 		text += "<br>";
-		text += _icon(winner)+" has the <i>lowest</i> score, so...<br>";
+		text += _icon(winner)+" tem a <i>menor</i> pontuação, então...<br>";
 		text += "</span>";
 		text += "<br>";
-		text += "<b style='color:"+color+"'>"+winner.toUpperCase()+"</b> WINS";
+		text += "<b style='color:"+color+"'>"+us2br(winner).toUpperCase()+"</b> VENCE";
 		model.caption.innerHTML = text;
 
 	}
@@ -218,8 +218,8 @@ Election.irv = function(model, options){
 
 	while(!finalWinner){
 
-		text += "<b>round "+roundNum+":</b><br>";
-		text += "who's voters' #1 choice?<br>";
+		text += "<b>turno nº "+roundNum+":</b><br>";
+		text += "quem é a escolha #1 dos eleitores?<br>";
 
 		// Tally the approvals & get winner!
 		var pre_tally = _tally(model, function(tally, ballot){
@@ -247,14 +247,14 @@ Election.irv = function(model, options){
 		var ratio = tally[winner]/model.getTotalVoters();
 		if(ratio>=0.5){
 			finalWinner = winner;
-			text += _icon(winner)+" has more than 50%<br>";
+			text += _icon(winner)+" tem mais que 50%<br>";
 			break;
 		}
 
 		// Otherwise... runoff...
 		var loser = _countLoser(tally);
-		text += "nobody's more than 50%. ";
-		text += "eliminate loser, "+_icon(loser)+". next round!<br><br>";
+		text += "ninguém tem mais que 50%. ";
+		text += "eliminamos o perdedor, "+_icon(loser)+". próximo turno!<br><br>";
 
 		// ACTUALLY ELIMINATE
 		candidates.splice(candidates.indexOf(loser), 1); // remove from candidates...
@@ -273,7 +273,7 @@ Election.irv = function(model, options){
 	var color = _colorWinner(model, finalWinner);
 	text += "</span>";
 	text += "<br>";
-	text += "<b style='color:"+color+"'>"+winner.toUpperCase()+"</b> WINS";
+	text += "<b style='color:"+color+"'>"+us2br(winner).toUpperCase()+"</b> VENCE";
 	model.caption.innerHTML = text;
 
 
@@ -294,28 +294,33 @@ Election.plurality = function(model, options){
 	var text = "";
 	text += "<span class='small'>";
 	if(options.sidebar){
-		text += "<b>most votes wins</b><br>";
+		text += "<b>quem tem mais votos vence</b><br>";
 	}
 	for(var i=0; i<model.candidates.length; i++){
 		var c = model.candidates[i].id;
 		if(options.sidebar){
-			text += _icon(c)+" got "+tally[c]+" votes<br>";
+			text += _icon(c)+" tem "+tally[c]+" votos<br>";
 		}else{
 			text += c+": "+tally[c];
-			if(options.verbose) text+=" votes";
+			if(options.verbose) text+=" votos";
 			if(i<model.candidates.length-1) text+=", ";
 		}
 	}
 	if(options.sidebar){
 		text += "<br>";
-		text += _icon(winner)+" has most votes, so...<br>";
+		text += _icon(winner)+" tem mais votos, então...<br>";
 	}
 	text += "</span>";
 	text += "<br>";
-	text += "<b style='color:"+color+"'>"+winner.toUpperCase()+"</b> WINS";
+	text += "<b style='color:"+color+"'>"+us2br(winner).toUpperCase()+"</b> VENCE";
 	model.caption.innerHTML = text;
 
 };
+
+var us2br = function(winner) {
+	ppl = {"square": "retângulo", "pentagon": "pentágono", "bob": "bob", "triangle": "triângulo", "hexagon": "hexágono"};
+	return ppl[winner];
+}
 
 var _tally = function(model, tallyFunc){
 
